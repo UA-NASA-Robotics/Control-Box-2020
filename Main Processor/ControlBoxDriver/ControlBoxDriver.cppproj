@@ -269,6 +269,12 @@
     <Compile Include="high_level_io\input_handler.hpp">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="high_level_io\output_handler.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="high_level_io\output_handler.hpp">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="i2c\i2c.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -279,6 +285,24 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="i2c\I2CIO.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="i2c\LCD.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="i2c\LCD.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="i2c\LiquidCrystal_I2C.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="i2c\LiquidCrystal_I2C.hpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="i2c\SevenSegment.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="i2c\SevenSegment.hpp">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="main.cpp">

@@ -29,7 +29,7 @@ private:
   Expander expander_left;
   Expander expander_right;
   ExpanderPin push_button_leds [NUM_PUSH_BUTTONS];
-  DigitalPin panel_leds [8];
+  DigitalPin panel_leds [4];
   //SimpleTimer1 timer;
 };
 

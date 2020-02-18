@@ -118,10 +118,10 @@ void OutputHandler::initialize_panel_leds ()
 	panel_leds[1].initialize(C, ONE, OUTPUT);
 	panel_leds[2].initialize(C, TWO, OUTPUT);
 	panel_leds[3].initialize(C, THREE, OUTPUT);
-	panel_leds[4].initialize(C, FOUR, OUTPUT);
-	panel_leds[5].initialize(C, FIVE, OUTPUT);
-	panel_leds[6].initialize(C, SIX, OUTPUT);
-	panel_leds[7].initialize(C, SEVEN, OUTPUT);
+//	panel_leds[4].initialize(C, FOUR, OUTPUT);
+//	panel_leds[5].initialize(C, FIVE, OUTPUT);
+//	panel_leds[6].initialize(C, SIX, OUTPUT);
+//	panel_leds[7].initialize(C, SEVEN, OUTPUT);
 	for (int i = 0; i < 8; ++i)
 		panel_leds[i].write(0);
 }
@@ -155,34 +155,34 @@ void OutputHandler::refresh_panel_leds ()
 	if (memory->read(CONNECTED))
 	{
 		panel_leds[0].write(1);
-		panel_leds[4].write(0);
+//		panel_leds[4].write(0);
 	}
 	else
 	{
 		panel_leds[0].write(0);
-		panel_leds[4].write(1);
+//		panel_leds[4].write(1);
 	}
 
 	if (memory->read(TIMEOUT_IN_PROGRESS))
 	{
 		panel_leds[3].write(0);
-		panel_leds[7].write(1);
+//		panel_leds[7].write(1);
 	}
 	else
 	{
 		panel_leds[3].write(1);
-		panel_leds[7].write(0);
+//		panel_leds[7].write(0);
 	}
 
 	if (memory->read(MACRO_TYPE))
 	{
 		panel_leds[2].write(0);
-		panel_leds[6].write(1);
+//		panel_leds[6].write(1);
 	}
 	else
 	{
 		panel_leds[2].write(1);
-		panel_leds[6].write(0);
+//		panel_leds[6].write(0);
 	}
 }
 

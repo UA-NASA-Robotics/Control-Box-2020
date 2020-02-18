@@ -55,8 +55,12 @@ C_SRCS +=  \
 ../digital_io/expander.cpp \
 ../digital_io/expander_pin.cpp \
 ../high_level_io/input_handler.cpp \
+../high_level_io/output_handler.cpp \
 ../i2c/i2c.cpp \
 ../i2c/I2CIO.cpp \
+../i2c/LCD.cpp \
+../i2c/LiquidCrystal_I2C.cpp \
+../i2c/SevenSegment.cpp \
 ../main.cpp \
 ../memory/memory.cpp \
 ../timer/Clock.cpp \
@@ -86,8 +90,12 @@ digital_io/digital_pin.o \
 digital_io/expander.o \
 digital_io/expander_pin.o \
 high_level_io/input_handler.o \
+high_level_io/output_handler.o \
 i2c/i2c.o \
 i2c/I2CIO.o \
+i2c/LCD.o \
+i2c/LiquidCrystal_I2C.o \
+i2c/SevenSegment.o \
 main.o \
 memory/memory.o \
 timer/Clock.o \
@@ -110,8 +118,12 @@ digital_io/digital_pin.o \
 digital_io/expander.o \
 digital_io/expander_pin.o \
 high_level_io/input_handler.o \
+high_level_io/output_handler.o \
 i2c/i2c.o \
 i2c/I2CIO.o \
+i2c/LCD.o \
+i2c/LiquidCrystal_I2C.o \
+i2c/SevenSegment.o \
 main.o \
 memory/memory.o \
 timer/Clock.o \
@@ -134,8 +146,12 @@ digital_io/digital_pin.d \
 digital_io/expander.d \
 digital_io/expander_pin.d \
 high_level_io/input_handler.d \
+high_level_io/output_handler.d \
 i2c/i2c.d \
 i2c/I2CIO.d \
+i2c/LCD.d \
+i2c/LiquidCrystal_I2C.d \
+i2c/SevenSegment.d \
 main.d \
 memory/memory.d \
 timer/Clock.d \
@@ -158,8 +174,12 @@ digital_io/digital_pin.d \
 digital_io/expander.d \
 digital_io/expander_pin.d \
 high_level_io/input_handler.d \
+high_level_io/output_handler.d \
 i2c/i2c.d \
 i2c/I2CIO.d \
+i2c/LCD.d \
+i2c/LiquidCrystal_I2C.d \
+i2c/SevenSegment.d \
 main.d \
 memory/memory.d \
 timer/Clock.d \
@@ -255,6 +275,13 @@ high_level_io/input_handler.o: ../high_level_io/input_handler.cpp
 	@echo Finished building: $<
 	
 
+high_level_io/output_handler.o: ../high_level_io/output_handler.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega1280 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\gcc\dev\atmega1280" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
 i2c/i2c.o: ../i2c/i2c.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
@@ -263,6 +290,27 @@ i2c/i2c.o: ../i2c/i2c.cpp
 	
 
 i2c/I2CIO.o: ../i2c/I2CIO.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega1280 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\gcc\dev\atmega1280" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+i2c/LCD.o: ../i2c/LCD.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega1280 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\gcc\dev\atmega1280" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+i2c/LiquidCrystal_I2C.o: ../i2c/LiquidCrystal_I2C.cpp
+	@echo Building file: $<
+	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega1280 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\gcc\dev\atmega1280" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+i2c/SevenSegment.o: ../i2c/SevenSegment.cpp
 	@echo Building file: $<
 	@echo Invoking: AVR8/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-g++.exe$(QUOTE) -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.150\include" -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -mrelax -g2 -Wall -mmcu=atmega1280 -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.1.130\gcc\dev\atmega1280" -c -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
