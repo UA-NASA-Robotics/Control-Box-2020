@@ -51,7 +51,7 @@ void TouchScreen::assign_objects ()
 //	objects[JOYSTICK_LEFT_Y] = Gauge1;
 //  objects[SLIDER_LEFT] = Gauge2;
 //	objects[JOYSTICK_RIGHT_X] = Gauge3;
-	//objects[JOYSTICK_RIGHT_Y] = Gauge4;
+//	objects[JOYSTICK_RIGHT_Y] = Gauge4;
 //  objects[SLIDER_RIGHT] = Gauge5;
 }
 
@@ -59,7 +59,8 @@ void TouchScreen::assign_objects ()
 Clocks screenRefreshTimer(500);
 void TouchScreen::refresh() const
 {
-	if(screenRefreshTimer.isDone()) {
+	if(screenRefreshTimer.isDone())
+	{
 		//printf("ScreenUpTime:%d\r\n",memory->read(CONNECTED_TIME_ELAP));
 		static int count = 0;
 		static const int rate = 10;
@@ -67,14 +68,12 @@ void TouchScreen::refresh() const
 		{
 			count = 0;
 			return;
-		}
+		} // end inner if
 		for (uint16_t i = 0; i < Memory::SIZE; ++i)
 			update_object(i);
 		screenRefreshTimer.reset();
-	}
-
-
-}
+	} // end outer if
+} // end refresh()
 
 void TouchScreen::update_object (uint16_t i) const
 {
@@ -91,30 +90,28 @@ void TouchScreen::update_object (uint16_t i) const
 	msg.value_msb    = value >> 8;
 	msg.value_lsb    = value;
 	msg.checksum     = msg.calculate_correct_checksum();
-	//if(send_message(msg)) {
-	//printf("Sending Screen Message: %d\nObject: %d\n",value,object);
-	//}
-
-}
+	// if(send_message(msg)) {
+	// printf("Sending Screen Message: %d\nObject: %d\n",value,object);
+	// }
+} // end update_object()
 
 /*-------------------------- Screen Communications ---------------------------*/
 
 void TouchScreen::send_byte (uint8_t value) const
 {
-
 	switch (uart_module)
 	{
 	case UART_0:
 		uart0_send_byte(value);
-when UART_1:
+			when UART_1:
 		uart1_send_byte(value);
-when UART_2:
+			when UART_2:
 		uart2_send_byte(value);
-otherwise: {
+		otherwise: {
 			uart3_send_byte(value);
 		}
-	}
-}
+	} // end switch
+} // end send_byte()
 
 uint8_t TouchScreen::read_byte () const
 {
@@ -130,26 +127,8 @@ uint8_t TouchScreen::read_byte () const
 		return uart3_read_byte();
 	}
 	return 0;
-}
-/*
-bool TouchScreen::send_message (const ScreenMessage & msg) const
-{
-  const int MAX_ATTEMPTS = 10;
-  int i = 0;
-  bool success = false;
-  do
-  {
-    send_byte(msg.command);
-    send_byte(msg.object_type);
-    send_byte(msg.object_index);
-    send_byte(msg.value_msb);
-    send_byte(msg.value_lsb);
-    send_byte(msg.checksum);
-    success = received_ack();
-  } while (!success && (i++ < MAX_ATTEMPTS));
-  return success;
-}
-*/
+} // end read_byte()
+
 bool TouchScreen::send_message (const ScreenMessage & msg) const
 {
 	static bool good_screen_coms = true;
@@ -171,30 +150,25 @@ bool TouchScreen::send_message (const ScreenMessage & msg) const
 		} while (!success && (i < MAX_ATTEMPTS));
 		if (i >= MAX_ATTEMPTS)
 			printf("Fail:!!\r\n");
-//      good_screen_coms = false;
 		return success;
-	}
+	} // end if
 	return false;
-}
+} // end send_message()
 
 bool TouchScreen::received_ack () const
 {
 	const uint16_t NACK = 0x0015;
 	const uint16_t ACK = 0x0006;
-	Clocks timeout(200); //milliseconds
-//  printf("timeout:\n");
-//  printf("currentTime: %u\n", timeout.currentTime);
-//  printf("startTime: %u\n", timeout.startTime);
-//  printf("length: %u\n", timeout.length);
+	Clocks timeout(200); // milliseconds
 	while (!timeout.isDone())
 	{
 		uint16_t val = read_byte();
 		if (val == NACK) {
 			return false;
-		}
+		} // end if
 		if (val == ACK) {
 			return true;
-		}
-	}
+		} // end if
+	} // end while
 	return false;
-}
+} // end received_ack()

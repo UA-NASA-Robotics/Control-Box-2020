@@ -245,6 +245,12 @@ Disassembly of section .text:
      19c:	31 cf       	rjmp	.-414    	; 0x0 <__vectors>
 
 0000019e <_ZN14Communications10initializeEjP6Memory>:
+}
+
+long Communications::mapVal(long x, long in_min, long in_max, long out_min, long out_max)
+{
+	return  (x - in_min) * (out_max - out_min ) / (in_max - in_min) + out_min;
+}
      19e:	fc 01       	movw	r30, r24
      1a0:	51 83       	std	Z+1, r21	; 0x01
      1a2:	40 83       	st	Z, r20
@@ -426,18 +432,31 @@ Disassembly of section .text:
      30c:	08 95       	ret
 
 0000030e <_GLOBAL__sub_I_MACRO_RE_SEND_TIMER>:
+#define when break;case
+#define otherwise break;default
+
+const UART_MODULE uart = UART_1;
+
+Clocks MACRO_RE_SEND_TIMER, ROBOT_PING_TIMER;
      30e:	8c ef       	ldi	r24, 0xFC	; 252
      310:	92 e0       	ldi	r25, 0x02	; 2
      312:	0e 94 70 0e 	call	0x1ce0	; 0x1ce0 <_ZN6ClocksC1Ev>
      316:	80 ef       	ldi	r24, 0xF0	; 240
      318:	92 e0       	ldi	r25, 0x02	; 2
      31a:	0e 94 70 0e 	call	0x1ce0	; 0x1ce0 <_ZN6ClocksC1Ev>
+Clocks ROBOT_CONNECTED_TIMEOUT, CONNECTED_TIME;
      31e:	84 ee       	ldi	r24, 0xE4	; 228
      320:	92 e0       	ldi	r25, 0x02	; 2
      322:	0e 94 70 0e 	call	0x1ce0	; 0x1ce0 <_ZN6ClocksC1Ev>
      326:	88 ed       	ldi	r24, 0xD8	; 216
      328:	92 e0       	ldi	r25, 0x02	; 2
      32a:	0e 94 70 0e 	call	0x1ce0	; 0x1ce0 <_ZN6ClocksC1Ev>
+	return unread_messages.pop();
+}
+
+
+// Talking to the Robot
+static Clocks TransmitPeriodTimer(100);
      32e:	44 e6       	ldi	r20, 0x64	; 100
      330:	50 e0       	ldi	r21, 0x00	; 0
      332:	60 e0       	ldi	r22, 0x00	; 0
@@ -740,18 +759,17 @@ void ControlBoxEngine::loop ()
      532:	1f 4f       	sbci	r17, 0xFF	; 255
      534:	c8 01       	movw	r24, r16
      536:	9d d3       	rcall	.+1850   	; 0xc72 <_ZN13OutputHandler7startupEv>
-	while (1)
-	{
-		//communications.check_connection();
-		//communications.transmit();
-		outputs.refresh();
-		communications.receive();
-     538:	21 96       	adiw	r28, 0x01	; 1
 
 	while (1)
 	{
-		//communications.check_connection();
-		//communications.transmit();
+		outputs.refresh();
+		communications.receive();
+     538:	21 96       	adiw	r28, 0x01	; 1
+{
+	outputs.startup();
+
+	while (1)
+	{
 		outputs.refresh();
      53a:	c8 01       	movw	r24, r16
      53c:	bb d2       	rcall	.+1398   	; 0xab4 <_ZN13OutputHandler7refreshEv>
@@ -762,6 +780,12 @@ void ControlBoxEngine::loop ()
 
 00000544 <_ZL12DDR_REGISTER4Port>:
      544:	90 e0       	ldi	r25, 0x00	; 0
+
+static volatile uint8_t error = 0;
+
+static volatile uint8_t & DDR_REGISTER (Port port)
+{
+  switch (port)
      546:	8b 30       	cpi	r24, 0x0B	; 11
      548:	91 05       	cpc	r25, r1
      54a:	18 f5       	brcc	.+70     	; 0x592 <_ZL12DDR_REGISTER4Port+0x4e>
@@ -769,44 +793,74 @@ void ControlBoxEngine::loop ()
      54e:	ee 58       	subi	r30, 0x8E	; 142
      550:	ff 4f       	sbci	r31, 0xFF	; 255
      552:	0c 94 52 14 	jmp	0x28a4	; 0x28a4 <__tablejump2__>
+  {
+    case A: return DDRA;
+    case B: return DDRB;
      556:	84 e2       	ldi	r24, 0x24	; 36
      558:	90 e0       	ldi	r25, 0x00	; 0
      55a:	08 95       	ret
+    case C: return DDRC;
      55c:	87 e2       	ldi	r24, 0x27	; 39
      55e:	90 e0       	ldi	r25, 0x00	; 0
      560:	08 95       	ret
+    case D: return DDRD;
      562:	8a e2       	ldi	r24, 0x2A	; 42
      564:	90 e0       	ldi	r25, 0x00	; 0
      566:	08 95       	ret
+    case E: return DDRE;
      568:	8d e2       	ldi	r24, 0x2D	; 45
      56a:	90 e0       	ldi	r25, 0x00	; 0
      56c:	08 95       	ret
+    case F: return DDRF;
      56e:	80 e3       	ldi	r24, 0x30	; 48
      570:	90 e0       	ldi	r25, 0x00	; 0
      572:	08 95       	ret
+    case G: return DDRG;
      574:	83 e3       	ldi	r24, 0x33	; 51
      576:	90 e0       	ldi	r25, 0x00	; 0
      578:	08 95       	ret
+    case H: return DDRH;
      57a:	81 e0       	ldi	r24, 0x01	; 1
      57c:	91 e0       	ldi	r25, 0x01	; 1
      57e:	08 95       	ret
+    case J: return DDRJ;
      580:	84 e0       	ldi	r24, 0x04	; 4
      582:	91 e0       	ldi	r25, 0x01	; 1
      584:	08 95       	ret
+    case K: return DDRK;
      586:	87 e0       	ldi	r24, 0x07	; 7
      588:	91 e0       	ldi	r25, 0x01	; 1
      58a:	08 95       	ret
+    case L: return DDRL;
      58c:	8a e0       	ldi	r24, 0x0A	; 10
      58e:	91 e0       	ldi	r25, 0x01	; 1
      590:	08 95       	ret
+  }
+  return error;
      592:	88 e0       	ldi	r24, 0x08	; 8
      594:	93 e0       	ldi	r25, 0x03	; 3
      596:	08 95       	ret
+
+static volatile uint8_t & DDR_REGISTER (Port port)
+{
+  switch (port)
+  {
+    case A: return DDRA;
      598:	81 e2       	ldi	r24, 0x21	; 33
      59a:	90 e0       	ldi	r25, 0x00	; 0
+    case J: return DDRJ;
+    case K: return DDRK;
+    case L: return DDRL;
+  }
+  return error;
+}
      59c:	08 95       	ret
 
 0000059e <_ZL13PORT_REGISTER4Port>:
+
+static volatile uint8_t & PORT_REGISTER (Port port)
+{
+  switch (port)
      59e:	90 e0       	ldi	r25, 0x00	; 0
      5a0:	8b 30       	cpi	r24, 0x0B	; 11
      5a2:	91 05       	cpc	r25, r1
@@ -815,44 +869,76 @@ void ControlBoxEngine::loop ()
      5a8:	e3 58       	subi	r30, 0x83	; 131
      5aa:	ff 4f       	sbci	r31, 0xFF	; 255
      5ac:	0c 94 52 14 	jmp	0x28a4	; 0x28a4 <__tablejump2__>
+  {
+    case A: return PORTA;
+    case B: return PORTB;
      5b0:	85 e2       	ldi	r24, 0x25	; 37
      5b2:	90 e0       	ldi	r25, 0x00	; 0
      5b4:	08 95       	ret
+    case C: return PORTC;
      5b6:	88 e2       	ldi	r24, 0x28	; 40
      5b8:	90 e0       	ldi	r25, 0x00	; 0
      5ba:	08 95       	ret
+    case D: return PORTD;
      5bc:	8b e2       	ldi	r24, 0x2B	; 43
      5be:	90 e0       	ldi	r25, 0x00	; 0
      5c0:	08 95       	ret
+    case E: return PORTE;
      5c2:	8e e2       	ldi	r24, 0x2E	; 46
      5c4:	90 e0       	ldi	r25, 0x00	; 0
      5c6:	08 95       	ret
+    case F: return PORTF;
      5c8:	81 e3       	ldi	r24, 0x31	; 49
      5ca:	90 e0       	ldi	r25, 0x00	; 0
      5cc:	08 95       	ret
+    case G: return PORTG;
      5ce:	84 e3       	ldi	r24, 0x34	; 52
      5d0:	90 e0       	ldi	r25, 0x00	; 0
      5d2:	08 95       	ret
+    case H: return PORTH;
      5d4:	82 e0       	ldi	r24, 0x02	; 2
      5d6:	91 e0       	ldi	r25, 0x01	; 1
      5d8:	08 95       	ret
+    case J: return PORTJ;
      5da:	85 e0       	ldi	r24, 0x05	; 5
      5dc:	91 e0       	ldi	r25, 0x01	; 1
      5de:	08 95       	ret
+    case K: return PORTK;
      5e0:	88 e0       	ldi	r24, 0x08	; 8
      5e2:	91 e0       	ldi	r25, 0x01	; 1
      5e4:	08 95       	ret
+    case L: return PORTL;
      5e6:	8b e0       	ldi	r24, 0x0B	; 11
      5e8:	91 e0       	ldi	r25, 0x01	; 1
      5ea:	08 95       	ret
+  }
+  return error; 
      5ec:	88 e0       	ldi	r24, 0x08	; 8
      5ee:	93 e0       	ldi	r25, 0x03	; 3
      5f0:	08 95       	ret
+
+static volatile uint8_t & PORT_REGISTER (Port port)
+{
+  switch (port)
+  {
+    case A: return PORTA;
      5f2:	82 e2       	ldi	r24, 0x22	; 34
      5f4:	90 e0       	ldi	r25, 0x00	; 0
+    case J: return PORTJ;
+    case K: return PORTK;
+    case L: return PORTL;
+  }
+  return error; 
+}
      5f6:	08 95       	ret
 
 000005f8 <_ZN10DigitalPin10initializeE4Port3Pin4Mode>:
+static bool read_from_pin (Port, Pin);
+
+/*---------------------- Public Interface of DigitalPin ----------------------*/
+
+void DigitalPin::initialize (Port port, Pin pin, Mode mode)
+{
      5f8:	0f 93       	push	r16
      5fa:	1f 93       	push	r17
      5fc:	cf 93       	push	r28
@@ -860,11 +946,26 @@ void ControlBoxEngine::loop ()
      600:	fc 01       	movw	r30, r24
      602:	c6 2f       	mov	r28, r22
      604:	d4 2f       	mov	r29, r20
+  this->port = port;
      606:	60 83       	st	Z, r22
+  this->pin = pin;
      608:	41 83       	std	Z+1, r20	; 0x01
+  this->mode = mode;
      60a:	22 83       	std	Z+2, r18	; 0x02
+  DDR_REGISTER(port) |= (1 << pin);
+}
+
+void set_pin_mode (Port port, Pin pin, Mode mode)
+{
+  if (mode == INPUT)
      60c:	21 11       	cpse	r18, r1
      60e:	16 c0       	rjmp	.+44     	; 0x63c <_ZN10DigitalPin10initializeE4Port3Pin4Mode+0x44>
+  return error;  
+}
+
+void configure_as_input (Port port, Pin pin)
+{
+  DDR_REGISTER(port) &= ~(1 << pin);
      610:	86 2f       	mov	r24, r22
      612:	98 df       	rcall	.-208    	; 0x544 <_ZL12DDR_REGISTER4Port>
      614:	fc 01       	movw	r30, r24
@@ -880,6 +981,7 @@ void ControlBoxEngine::loop ()
      628:	d0 95       	com	r29
      62a:	9d 23       	and	r25, r29
      62c:	90 83       	st	Z, r25
+  PORT_REGISTER(port) &= ~(1 << pin);
      62e:	8c 2f       	mov	r24, r28
      630:	b6 df       	rcall	.-148    	; 0x59e <_ZL13PORT_REGISTER4Port>
      632:	fc 01       	movw	r30, r24
@@ -887,7 +989,19 @@ void ControlBoxEngine::loop ()
      636:	2d 23       	and	r18, r29
      638:	20 83       	st	Z, r18
      63a:	25 c0       	rjmp	.+74     	; 0x686 <_ZN10DigitalPin10initializeE4Port3Pin4Mode+0x8e>
+
+void set_pin_mode (Port port, Pin pin, Mode mode)
+{
+  if (mode == INPUT)
+    configure_as_input(port, pin);
+  else if (mode == INPUT_PULLUP)
      63c:	22 30       	cpi	r18, 0x02	; 2
+  PORT_REGISTER(port) &= ~(1 << pin);
+}
+
+void configure_as_input_pullup (Port port, Pin pin)
+{
+  DDR_REGISTER(port) &= ~(1 << pin);
      63e:	b1 f4       	brne	.+44     	; 0x66c <_ZN10DigitalPin10initializeE4Port3Pin4Mode+0x74>
      640:	86 2f       	mov	r24, r22
      642:	80 df       	rcall	.-256    	; 0x544 <_ZL12DDR_REGISTER4Port>
@@ -903,6 +1017,7 @@ void ControlBoxEngine::loop ()
      656:	80 2f       	mov	r24, r16
      658:	80 95       	com	r24
      65a:	98 23       	and	r25, r24
+  PORT_REGISTER(port) |= (1 << pin);
      65c:	90 83       	st	Z, r25
      65e:	8c 2f       	mov	r24, r28
      660:	9e df       	rcall	.-196    	; 0x59e <_ZL13PORT_REGISTER4Port>
@@ -910,6 +1025,11 @@ void ControlBoxEngine::loop ()
      664:	20 81       	ld	r18, Z
      666:	02 2b       	or	r16, r18
      668:	00 83       	st	Z, r16
+}
+
+void configure_as_output (Port port, Pin pin)
+{
+  DDR_REGISTER(port) |= (1 << pin);
      66a:	0d c0       	rjmp	.+26     	; 0x686 <_ZN10DigitalPin10initializeE4Port3Pin4Mode+0x8e>
      66c:	86 2f       	mov	r24, r22
      66e:	6a df       	rcall	.-300    	; 0x544 <_ZL12DDR_REGISTER4Port>
@@ -924,6 +1044,12 @@ void ControlBoxEngine::loop ()
      680:	e2 f7       	brpl	.-8      	; 0x67a <_ZN10DigitalPin10initializeE4Port3Pin4Mode+0x82>
      682:	24 2b       	or	r18, r20
      684:	20 83       	st	Z, r18
+{
+  this->port = port;
+  this->pin = pin;
+  this->mode = mode;
+  set_pin_mode(port, pin, mode);
+}
      686:	df 91       	pop	r29
      688:	cf 91       	pop	r28
      68a:	1f 91       	pop	r17
@@ -931,12 +1057,23 @@ void ControlBoxEngine::loop ()
      68e:	08 95       	ret
 
 00000690 <_ZN10DigitalPin5writeEb>:
+
+void DigitalPin::write (bool value)
+{
      690:	cf 93       	push	r28
+  write_to_pin(port, pin, value);
      692:	fc 01       	movw	r30, r24
      694:	c1 81       	ldd	r28, Z+1	; 0x01
      696:	80 81       	ld	r24, Z
+    return INPUT;
+}
+
+void write_to_pin (Port port, Pin pin, bool value)
+{
+  if (value)
      698:	66 23       	and	r22, r22
      69a:	69 f0       	breq	.+26     	; 0x6b6 <_ZN10DigitalPin5writeEb+0x26>
+    PORT_REGISTER(port) |= (1 << pin);
      69c:	80 df       	rcall	.-256    	; 0x59e <_ZL13PORT_REGISTER4Port>
      69e:	fc 01       	movw	r30, r24
      6a0:	40 81       	ld	r20, Z
@@ -950,6 +1087,8 @@ void ControlBoxEngine::loop ()
      6b0:	24 2b       	or	r18, r20
      6b2:	20 83       	st	Z, r18
      6b4:	0d c0       	rjmp	.+26     	; 0x6d0 <_ZN10DigitalPin5writeEb+0x40>
+  else
+    PORT_REGISTER(port) &= ~(1 << pin);
      6b6:	73 df       	rcall	.-282    	; 0x59e <_ZL13PORT_REGISTER4Port>
      6b8:	fc 01       	movw	r30, r24
      6ba:	90 81       	ld	r25, Z
@@ -964,6 +1103,12 @@ void ControlBoxEngine::loop ()
      6cc:	29 23       	and	r18, r25
      6ce:	20 83       	st	Z, r18
      6d0:	cf 91       	pop	r28
+}
+
+void DigitalPin::write (bool value)
+{
+  write_to_pin(port, pin, value);
+}
      6d2:	08 95       	ret
 
 000006d4 <_ZN8Expander11set_addressEh>:
@@ -1853,11 +1998,11 @@ LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7);
      d8a:	86 e1       	ldi	r24, 0x16	; 22
      d8c:	93 e0       	ldi	r25, 0x03	; 3
      d8e:	6e d3       	rcall	.+1756   	; 0x146c <_ZN17LiquidCrystal_I2CC1Ehhhhhhhh>
-//	panel_leds[6].initialize(C, SIX, OUTPUT);
-//	panel_leds[7].initialize(C, SEVEN, OUTPUT);
+	panel_leds[3].initialize(C, THREE, OUTPUT);
 	for (int i = 0; i < 8; ++i)
 		panel_leds[i].write(0);
-}
+} // end initialize_panel_leds()
+
 Clocks blinkTimer(500);
      d90:	44 ef       	ldi	r20, 0xF4	; 244
      d92:	51 e0       	ldi	r21, 0x01	; 1
@@ -1960,7 +2105,7 @@ void OutputHandler::initialize (Memory * memory)
      e1c:	df 91       	pop	r29
      e1e:	cf 91       	pop	r28
      e20:	1f 91       	pop	r17
-}
+} // end initialize()
      e22:	0f 91       	pop	r16
      e24:	08 95       	ret
 
@@ -3810,6 +3955,12 @@ class Communications
     1bb6:	08 95       	ret
 
 00001bb8 <_ZN11TouchScreen14assign_objectsEv>:
+		if (i >= MAX_ATTEMPTS)
+			printf("Fail:!!\r\n");
+		return success;
+	} // end if
+	return false;
+} // end send_message()
     1bb8:	fc 01       	movw	r30, r24
     1bba:	36 96       	adiw	r30, 0x06	; 6
     1bbc:	9c 01       	movw	r18, r24
@@ -3935,6 +4086,12 @@ class Communications
     1cac:	08 95       	ret
 
 00001cae <_GLOBAL__sub_I__ZN11TouchScreen10initializeEP6Memoryj>:
+//	objects[JOYSTICK_RIGHT_Y] = Gauge4;
+//  objects[SLIDER_RIGHT] = Gauge5;
+}
+
+/*----------------------------- Updating Screen ------------------------------*/
+Clocks screenRefreshTimer(500);
     1cae:	44 ef       	ldi	r20, 0xF4	; 244
     1cb0:	51 e0       	ldi	r21, 0x01	; 1
     1cb2:	60 e0       	ldi	r22, 0x00	; 0

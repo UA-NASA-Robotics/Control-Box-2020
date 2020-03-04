@@ -30,7 +30,7 @@ private:
   Expander expander_right;
   ExpanderPin push_button_leds [NUM_PUSH_BUTTONS];
   DigitalPin panel_leds [4];
-  //SimpleTimer1 timer;
+  // SimpleTimer1 timer;
 };
 
 #endif // OUTPUT_HANDLER_HPP

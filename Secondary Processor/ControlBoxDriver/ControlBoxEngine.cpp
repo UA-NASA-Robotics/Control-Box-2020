@@ -19,8 +19,6 @@ void ControlBoxEngine::loop ()
 
 	while (1)
 	{
-		//communications.check_connection();
-		//communications.transmit();
 		outputs.refresh();
 		communications.receive();
 	}

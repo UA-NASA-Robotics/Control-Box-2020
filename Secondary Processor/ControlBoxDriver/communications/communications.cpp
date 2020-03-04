@@ -48,20 +48,19 @@ void Communications::receive ()
 	read();
 	while (get_num_messages() > 0)
 	{
-
 		Message msg = get_next_message();
 		uint16_t data = (uint16_t)msg.first + ((uint16_t)msg.second << 8);
-		if (memory->valid_address(msg.address)) {
-			if(msg.address == MACRO_TYPE && data == 0 ) {
+		if (memory->valid_address(msg.address))
+		{
+			if(msg.address == MACRO_TYPE && data == 0 )
+			{
 				memory->write(memory->read(MACRO_TYPE) -1 + PUSH_BUTTON_0_FLAG, 0);
-			}
+			} // end inner if
 			memory->write(msg.address, data);
-		}
-		//if We get a stop macro clear the buttons
-
-	}
-
-}
+		} // end outer if
+		// if We get a stop macro clear the buttons
+	} // end while
+} // end receive()
 
 void Communications::read ()
 {
