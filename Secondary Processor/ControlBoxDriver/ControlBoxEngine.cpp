@@ -11,7 +11,9 @@ void ControlBoxEngine::initialize ()
 	memory.initialize();
 	
 	outputs.initialize(&memory);
-	communications.initialize(UART_1, &memory);
+	// communications.initialize(UART_1, &memory);
+	// TODO
+	secondProcessor_FT.initialize(UART_2, &memory);
 }
 void ControlBoxEngine::loop ()
 {
@@ -20,6 +22,7 @@ void ControlBoxEngine::loop ()
 	while (1)
 	{
 		outputs.refresh();
-		communications.receive();
+		// communications.receive()
+		secondProcessor_FT.receive();
 	}
 }

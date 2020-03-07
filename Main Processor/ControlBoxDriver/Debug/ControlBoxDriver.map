@@ -1864,63 +1864,63 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000    0x13569
+.debug_info     0x00000000    0x1356a
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0xbbc C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega1280/avr51/crtatmega1280.o
  .debug_info    0x00000bbc      0x42f analog_input/analog_input.o
  .debug_info    0x00000feb     0x260e communications/communications.o
  .debug_info    0x000035f9      0x372 communications/message_queue.o
  .debug_info    0x0000396b      0x5dc communications/parser.o
- .debug_info    0x00003f47     0x1687 ControlBoxEngine.o
- .debug_info    0x000055ce      0x6b4 digital_io/digital_pin.o
- .debug_info    0x00005c82      0x5ac digital_io/expander.o
- .debug_info    0x0000622e      0x7c7 digital_io/expander_pin.o
- .debug_info    0x000069f5     0x1879 high_level_io/input_handler.o
- .debug_info    0x0000826e     0x24c6 high_level_io/output_handler.o
- .debug_info    0x0000a734      0xbbd i2c/i2c.o
- .debug_info    0x0000b2f1      0x819 i2c/I2CIO.o
- .debug_info    0x0000bb0a     0x14b0 i2c/LCD.o
- .debug_info    0x0000cfba     0x11b9 i2c/LiquidCrystal_I2C.o
- .debug_info    0x0000e173     0x17fe i2c/SevenSegment.o
- .debug_info    0x0000f971     0x174c main.o
- .debug_info    0x000110bd      0x311 memory/memory.o
- .debug_info    0x000113ce      0x7e4 timer/Clock.o
- .debug_info    0x00011bb2      0x460 timer/SimpleTimer0.o
- .debug_info    0x00012012      0x475 timer/SimpleTimer1.o
- .debug_info    0x00012487      0x43b timer/timer.o
- .debug_info    0x000128c2      0x292 uart/uart_0.o
- .debug_info    0x00012b54      0x292 uart/uart_1.o
- .debug_info    0x00012de6      0x415 uart/uart_2.o
- .debug_info    0x000131fb      0x36e uart/uart_3.o
+ .debug_info    0x00003f47     0x1688 ControlBoxEngine.o
+ .debug_info    0x000055cf      0x6b4 digital_io/digital_pin.o
+ .debug_info    0x00005c83      0x5ac digital_io/expander.o
+ .debug_info    0x0000622f      0x7c7 digital_io/expander_pin.o
+ .debug_info    0x000069f6     0x1879 high_level_io/input_handler.o
+ .debug_info    0x0000826f     0x24c6 high_level_io/output_handler.o
+ .debug_info    0x0000a735      0xbbd i2c/i2c.o
+ .debug_info    0x0000b2f2      0x819 i2c/I2CIO.o
+ .debug_info    0x0000bb0b     0x14b0 i2c/LCD.o
+ .debug_info    0x0000cfbb     0x11b9 i2c/LiquidCrystal_I2C.o
+ .debug_info    0x0000e174     0x17fe i2c/SevenSegment.o
+ .debug_info    0x0000f972     0x174c main.o
+ .debug_info    0x000110be      0x311 memory/memory.o
+ .debug_info    0x000113cf      0x7e4 timer/Clock.o
+ .debug_info    0x00011bb3      0x460 timer/SimpleTimer0.o
+ .debug_info    0x00012013      0x475 timer/SimpleTimer1.o
+ .debug_info    0x00012488      0x43b timer/timer.o
+ .debug_info    0x000128c3      0x292 uart/uart_0.o
+ .debug_info    0x00012b55      0x292 uart/uart_1.o
+ .debug_info    0x00012de7      0x415 uart/uart_2.o
+ .debug_info    0x000131fc      0x36e uart/uart_3.o
 
-.debug_abbrev   0x00000000     0x4948
+.debug_abbrev   0x00000000     0x494a
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0xb1a C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega1280/avr51/crtatmega1280.o
  .debug_abbrev  0x00000b1a      0x1f7 analog_input/analog_input.o
  .debug_abbrev  0x00000d11      0x517 communications/communications.o
  .debug_abbrev  0x00001228      0x1e3 communications/message_queue.o
  .debug_abbrev  0x0000140b      0x261 communications/parser.o
- .debug_abbrev  0x0000166c      0x30b ControlBoxEngine.o
- .debug_abbrev  0x00001977      0x22a digital_io/digital_pin.o
- .debug_abbrev  0x00001ba1      0x1fc digital_io/expander.o
- .debug_abbrev  0x00001d9d      0x201 digital_io/expander_pin.o
- .debug_abbrev  0x00001f9e      0x2d8 high_level_io/input_handler.o
- .debug_abbrev  0x00002276      0x428 high_level_io/output_handler.o
- .debug_abbrev  0x0000269e      0x33c i2c/i2c.o
- .debug_abbrev  0x000029da      0x24f i2c/I2CIO.o
- .debug_abbrev  0x00002c29      0x3d9 i2c/LCD.o
- .debug_abbrev  0x00003002      0x312 i2c/LiquidCrystal_I2C.o
- .debug_abbrev  0x00003314      0x372 i2c/SevenSegment.o
- .debug_abbrev  0x00003686      0x3ae main.o
- .debug_abbrev  0x00003a34      0x1e9 memory/memory.o
- .debug_abbrev  0x00003c1d      0x252 timer/Clock.o
- .debug_abbrev  0x00003e6f      0x1fe timer/SimpleTimer0.o
- .debug_abbrev  0x0000406d      0x1ec timer/SimpleTimer1.o
- .debug_abbrev  0x00004259      0x141 timer/timer.o
- .debug_abbrev  0x0000439a      0x114 uart/uart_0.o
- .debug_abbrev  0x000044ae      0x114 uart/uart_1.o
- .debug_abbrev  0x000045c2      0x1f6 uart/uart_2.o
- .debug_abbrev  0x000047b8      0x190 uart/uart_3.o
+ .debug_abbrev  0x0000166c      0x30d ControlBoxEngine.o
+ .debug_abbrev  0x00001979      0x22a digital_io/digital_pin.o
+ .debug_abbrev  0x00001ba3      0x1fc digital_io/expander.o
+ .debug_abbrev  0x00001d9f      0x201 digital_io/expander_pin.o
+ .debug_abbrev  0x00001fa0      0x2d8 high_level_io/input_handler.o
+ .debug_abbrev  0x00002278      0x428 high_level_io/output_handler.o
+ .debug_abbrev  0x000026a0      0x33c i2c/i2c.o
+ .debug_abbrev  0x000029dc      0x24f i2c/I2CIO.o
+ .debug_abbrev  0x00002c2b      0x3d9 i2c/LCD.o
+ .debug_abbrev  0x00003004      0x312 i2c/LiquidCrystal_I2C.o
+ .debug_abbrev  0x00003316      0x372 i2c/SevenSegment.o
+ .debug_abbrev  0x00003688      0x3ae main.o
+ .debug_abbrev  0x00003a36      0x1e9 memory/memory.o
+ .debug_abbrev  0x00003c1f      0x252 timer/Clock.o
+ .debug_abbrev  0x00003e71      0x1fe timer/SimpleTimer0.o
+ .debug_abbrev  0x0000406f      0x1ec timer/SimpleTimer1.o
+ .debug_abbrev  0x0000425b      0x141 timer/timer.o
+ .debug_abbrev  0x0000439c      0x114 uart/uart_0.o
+ .debug_abbrev  0x000044b0      0x114 uart/uart_1.o
+ .debug_abbrev  0x000045c4      0x1f6 uart/uart_2.o
+ .debug_abbrev  0x000047ba      0x190 uart/uart_3.o
 
 .debug_line     0x00000000     0x57c6
  *(.debug_line .debug_line.* .debug_line_end)
@@ -1979,7 +1979,7 @@ END GROUP
  .debug_frame   0x00001dc4       0xd4 uart/uart_2.o
  .debug_frame   0x00001e98       0xc4 uart/uart_3.o
 
-.debug_str      0x00000000     0x455c
+.debug_str      0x00000000     0x4556
  *(.debug_str)
  .debug_str     0x00000000      0x3e6 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega1280/avr51/crtatmega1280.o
  .debug_str     0x000003e6      0x3d2 analog_input/analog_input.o
@@ -1990,47 +1990,47 @@ END GROUP
                                 0x309 (size before relaxing)
  .debug_str     0x0000171a       0x51 communications/parser.o
                                 0x438 (size before relaxing)
- .debug_str     0x0000176b      0x892 ControlBoxEngine.o
-                               0x19d5 (size before relaxing)
- .debug_str     0x00001ffd       0xaf digital_io/digital_pin.o
+ .debug_str     0x0000176b      0x8e3 ControlBoxEngine.o
+                               0x19ce (size before relaxing)
+ .debug_str     0x0000204e       0xaf digital_io/digital_pin.o
                                 0x397 (size before relaxing)
- .debug_str     0x000020ac       0x24 digital_io/expander.o
+ .debug_str     0x000020fd       0x24 digital_io/expander.o
                                 0x544 (size before relaxing)
- .debug_str     0x000020d0       0x39 digital_io/expander_pin.o
+ .debug_str     0x00002121       0x39 digital_io/expander_pin.o
                                 0x676 (size before relaxing)
- .debug_str     0x00002109       0x49 high_level_io/input_handler.o
+ .debug_str     0x0000215a       0x49 high_level_io/input_handler.o
                                 0xf42 (size before relaxing)
- .debug_str     0x00002152      0xbce high_level_io/output_handler.o
+ .debug_str     0x000021a3      0xb77 high_level_io/output_handler.o
                                0x16c4 (size before relaxing)
- .debug_str     0x00002d20       0xab i2c/i2c.o
+ .debug_str     0x00002d1a       0xab i2c/i2c.o
                                 0x5a0 (size before relaxing)
- .debug_str     0x00002dcb      0x16a i2c/I2CIO.o
+ .debug_str     0x00002dc5      0x16a i2c/I2CIO.o
                                 0x629 (size before relaxing)
- .debug_str     0x00002f35      0x43a i2c/LCD.o
+ .debug_str     0x00002f2f      0x43a i2c/LCD.o
                                 0x6fc (size before relaxing)
- .debug_str     0x0000336f      0x332 i2c/LiquidCrystal_I2C.o
+ .debug_str     0x00003369      0x332 i2c/LiquidCrystal_I2C.o
                                 0x762 (size before relaxing)
- .debug_str     0x000036a1       0xd6 i2c/SevenSegment.o
+ .debug_str     0x0000369b       0xd6 i2c/SevenSegment.o
                                 0xad9 (size before relaxing)
- .debug_str     0x00003777       0x45 main.o
-                               0x1a44 (size before relaxing)
- .debug_str     0x000037bc       0x4d memory/memory.o
+ .debug_str     0x00003771       0x45 main.o
+                               0x1a3d (size before relaxing)
+ .debug_str     0x000037b6       0x4d memory/memory.o
                                 0x2bf (size before relaxing)
- .debug_str     0x00003809      0x15a timer/Clock.o
+ .debug_str     0x00003803      0x15a timer/Clock.o
                                 0x4f3 (size before relaxing)
- .debug_str     0x00003963      0x3a4 timer/SimpleTimer0.o
+ .debug_str     0x0000395d      0x3a4 timer/SimpleTimer0.o
                                 0x5ac (size before relaxing)
- .debug_str     0x00003d07       0x6d timer/SimpleTimer1.o
+ .debug_str     0x00003d01       0x6d timer/SimpleTimer1.o
                                 0x351 (size before relaxing)
- .debug_str     0x00003d74      0x497 timer/timer.o
+ .debug_str     0x00003d6e      0x497 timer/timer.o
                                 0x90c (size before relaxing)
- .debug_str     0x0000420b      0x14a uart/uart_0.o
+ .debug_str     0x00004205      0x14a uart/uart_0.o
                                 0x30e (size before relaxing)
- .debug_str     0x00004355       0x56 uart/uart_1.o
+ .debug_str     0x0000434f       0x56 uart/uart_1.o
                                 0x30e (size before relaxing)
- .debug_str     0x000043ab       0xea uart/uart_2.o
+ .debug_str     0x000043a5       0xea uart/uart_2.o
                                 0x36e (size before relaxing)
- .debug_str     0x00004495       0xc7 uart/uart_3.o
+ .debug_str     0x0000448f       0xc7 uart/uart_3.o
                                 0x33a (size before relaxing)
 
 .debug_loc      0x00000000     0x9fc7

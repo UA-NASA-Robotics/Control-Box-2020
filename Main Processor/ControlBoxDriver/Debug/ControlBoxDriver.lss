@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 00000af8  00000000  00000000  00002a88  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00013569  00000000  00000000  00003580  2**0
+  6 .debug_info   0001356a  00000000  00000000  00003580  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00004948  00000000  00000000  00016ae9  2**0
+  7 .debug_abbrev 0000494a  00000000  00000000  00016aea  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000057c6  00000000  00000000  0001b431  2**0
+  8 .debug_line   000057c6  00000000  00000000  0001b434  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00001f5c  00000000  00000000  00020bf8  2**2
+  9 .debug_frame  00001f5c  00000000  00000000  00020bfc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000455c  00000000  00000000  00022b54  2**0
+ 10 .debug_str    00004556  00000000  00000000  00022b58  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00009fc7  00000000  00000000  000270b0  2**0
+ 11 .debug_loc    00009fc7  00000000  00000000  000270ae  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000ad8  00000000  00000000  00031077  2**0
+ 12 .debug_ranges 00000ad8  00000000  00000000  00031075  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1935,38 +1935,68 @@ Disassembly of section .text:
      ee2:	08 95       	ret
 
 00000ee4 <_ZN16ControlBoxEngine10initializeEv>:
+#include <avr/interrupt.h>
+#include "timer/Clock.hpp"
+#include "digital_io/digital_pin.hpp"
+
+void ControlBoxEngine::initialize ()
+{
      ee4:	cf 93       	push	r28
      ee6:	df 93       	push	r29
      ee8:	ec 01       	movw	r28, r24
+	sei();
      eea:	78 94       	sei
+	memory.initialize();
      eec:	3a d7       	rcall	.+3700   	; 0x1d62 <_ZN6Memory10initializeEv>
+	inputs.initialize(&memory);
      eee:	be 01       	movw	r22, r28
      ef0:	ce 01       	movw	r24, r28
      ef2:	85 52       	subi	r24, 0x25	; 37
      ef4:	9f 4f       	sbci	r25, 0xFF	; 255
      ef6:	9a d2       	rcall	.+1332   	; 0x142c <_ZN12InputHandler10initializeEP6Memory>
+	//communications.initialize(UART_1, &memory);
+	robot_FT.initialize(UART_1, &memory);
      ef8:	ae 01       	movw	r20, r28
      efa:	61 e0       	ldi	r22, 0x01	; 1
      efc:	70 e0       	ldi	r23, 0x00	; 0
      efe:	ce 01       	movw	r24, r28
      f00:	01 96       	adiw	r24, 0x01	; 1
      f02:	c0 d9       	rcall	.-3200   	; 0x284 <_ZN14Communications10initializeEjP6Memory>
+}
      f04:	df 91       	pop	r29
      f06:	cf 91       	pop	r28
      f08:	08 95       	ret
 
 00000f0a <_ZN16ControlBoxEngine4loopEv>:
+void ControlBoxEngine::loop ()
+{
+	while (1)
+	{
+		//communications.check_connection();
+		robot_FT.check_connection();
      f0a:	ec 01       	movw	r28, r24
      f0c:	21 96       	adiw	r28, 0x01	; 1
+		inputs.poll();
      f0e:	8c 01       	movw	r16, r24
      f10:	05 52       	subi	r16, 0x25	; 37
      f12:	1f 4f       	sbci	r17, 0xFF	; 255
+void ControlBoxEngine::loop ()
+{
+	while (1)
+	{
+		//communications.check_connection();
+		robot_FT.check_connection();
      f14:	ce 01       	movw	r24, r28
      f16:	de d9       	rcall	.-3140   	; 0x2d4 <_ZN14Communications16check_connectionEv>
+		inputs.poll();
      f18:	c8 01       	movw	r24, r16
      f1a:	09 d3       	rcall	.+1554   	; 0x152e <_ZN12InputHandler4pollEv>
+		//communications.transmit();
+		robot_FT.transmit();
      f1c:	ce 01       	movw	r24, r28
      f1e:	99 de       	rcall	.-718    	; 0xc52 <_ZN14Communications8transmitEv>
+		//communications.receive();
+		robot_FT.receive();
      f20:	ce 01       	movw	r24, r28
      f22:	f9 dd       	rcall	.-1038   	; 0xb16 <_ZN14Communications7receiveEv>
      f24:	f7 cf       	rjmp	.-18     	; 0xf14 <_ZN16ControlBoxEngine4loopEv+0xa>
@@ -4036,6 +4066,12 @@ Adafruit_7segment::Adafruit_7segment(uint8_t address) {
     1cfc:	08 95       	ret
 
 00001cfe <main>:
+
+#define F_CPU 16000000UL
+#include <util/delay.h>
+
+int main ()
+{
     1cfe:	cf 93       	push	r28
     1d00:	df 93       	push	r29
     1d02:	cd b7       	in	r28, 0x3d	; 61
@@ -4062,6 +4098,12 @@ Adafruit_7segment::Adafruit_7segment(uint8_t address) {
     1d20:	e1 f7       	brne	.-8      	; 0x1d1a <main+0x1c>
     1d22:	00 c0       	rjmp	.+0      	; 0x1d24 <main+0x26>
     1d24:	00 00       	nop
+#include "../memory/memory.hpp"
+#include "../uart/uart_module.hpp"
+#include "request.hpp"
+#include "../timer/Clock.hpp"
+
+class Communications
     1d26:	ce 01       	movw	r24, r28
     1d28:	04 96       	adiw	r24, 0x04	; 4
     1d2a:	0e 94 94 06 	call	0xd28	; 0xd28 <_ZN12MessageQueueC1Ev>
@@ -4073,12 +4115,17 @@ Adafruit_7segment::Adafruit_7segment(uint8_t address) {
     1d38:	80 53       	subi	r24, 0x30	; 48
     1d3a:	9f 4f       	sbci	r25, 0xFF	; 255
     1d3c:	5e d0       	rcall	.+188    	; 0x1dfa <_ZN6ClocksC1Ev>
+  _delay_ms(1000);
+  ControlBoxEngine box;
+  box.initialize();
     1d3e:	ce 01       	movw	r24, r28
     1d40:	01 96       	adiw	r24, 0x01	; 1
     1d42:	d0 d8       	rcall	.-3680   	; 0xee4 <_ZN16ControlBoxEngine10initializeEv>
+  box.loop();
     1d44:	ce 01       	movw	r24, r28
     1d46:	01 96       	adiw	r24, 0x01	; 1
     1d48:	e0 d8       	rcall	.-3648   	; 0xf0a <_ZN16ControlBoxEngine4loopEv>
+  return 0;
     1d4a:	80 e0       	ldi	r24, 0x00	; 0
     1d4c:	90 e0       	ldi	r25, 0x00	; 0
     1d4e:	c2 59       	subi	r28, 0x92	; 146

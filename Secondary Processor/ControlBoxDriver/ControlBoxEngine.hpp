@@ -14,7 +14,10 @@ public:
 private:
 	void listen_to_robot ();
 	Memory memory;
-	Communications communications;
+	//Communications communications;
+	// TODO
+	Communications secondProcessor_FT;
+	
 	OutputHandler outputs;
 };
 

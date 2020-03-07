@@ -10,6 +10,7 @@
 #include "request.hpp"
 #include "../timer/Clock.hpp"
 
+// Fast Transfer
 class Communications
 {
 public:

@@ -14,7 +14,8 @@ public:
 private:
 	void listen_to_robot ();
 	Memory memory;
-	Communications communications;
+	//Communications communications;
+	Communications robot_FT;
 	InputHandler inputs;
 };
 

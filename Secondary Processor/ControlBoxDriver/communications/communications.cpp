@@ -27,18 +27,13 @@ const uint8_t CONTROL_BOX_ADDRESS = 0x01;
 
 const UART_MODULE uart = UART_1;
 
-Clocks MACRO_RE_SEND_TIMER, ROBOT_PING_TIMER;
-Clocks ROBOT_CONNECTED_TIMEOUT, CONNECTED_TIME;
+
 void Communications::initialize (UART_MODULE uart, Memory * memory)
 {
 	//uart = UART_1;
 	this->memory = memory;
 	initialize_uart();
-	MACRO_RE_SEND_TIMER.setInterval(100);
-	ROBOT_PING_TIMER.setInterval(300);
-	ROBOT_CONNECTED_TIMEOUT.setInterval(2000);
-	CONNECTED_TIME.setInterval(1010);
-
+	
 }
 
 // Listening to the Robot

@@ -194,13 +194,13 @@ void OutputHandler::spiral ()
 		int index = indices[15 - j];
 		push_button_leds[index].write(1);
 		_delay_ms(pause);
-	}
+	} // end for
 	for (int j = 0; j < 16; ++j)
 	{
 		int index = indices[15 - j];
 		push_button_leds[index].write(0);
 		_delay_ms(pause);
-	}
+	} // end for
 } // end spiral()
 
 void OutputHandler::drop ()

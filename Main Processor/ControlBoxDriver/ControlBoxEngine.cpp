@@ -8,16 +8,19 @@ void ControlBoxEngine::initialize ()
 	sei();
 	memory.initialize();
 	inputs.initialize(&memory);
-	communications.initialize(UART_1, &memory);
+	//communications.initialize(UART_1, &memory);
+	robot_FT.initialize(UART_1, &memory);
 }
 void ControlBoxEngine::loop ()
 {
 	while (1)
 	{
-		communications.check_connection();
+		//communications.check_connection();
+		robot_FT.check_connection();
 		inputs.poll();
-		communications.transmit();
-		communications.receive();
-		
+		//communications.transmit();
+		robot_FT.transmit();
+		//communications.receive();
+		robot_FT.receive();
 	}
 }
