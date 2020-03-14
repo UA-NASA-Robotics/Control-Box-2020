@@ -33,8 +33,10 @@
 
 void copy_range (uint8_t * src, uint8_t * dest, uint8_t size)
 {
-	for (int i = 0; i < size; ++i)
+	for (int i = 0; i < size; ++i) {
 		*dest++ = *src++;
+		printf("copy%d: %d\n",i,*dest);
+	}
 }
 
 bool interrupt_flag_set ()
@@ -62,24 +64,25 @@ int I2C::write (uint8_t * data, uint8_t size)
 	while (state != DONE)
 	{
 		if (fail_count >= MAX_FAIL_COUNT)
-			return I2C_FAILURE;
+		return I2C_FAILURE;
 		switch (state)
 		{
-		case START:
+			case START:
 			start();
-when VERIFY_START:
+			when VERIFY_START:
 			verify_start();
-when SEND_ADDRESS:
+			when SEND_ADDRESS:
 			send_address(WRITE);
-when VERIFY_ADDRESS:
+			when VERIFY_ADDRESS:
 			verify_write_address_sent();
-when SEND_BYTE:
+			when SEND_BYTE:
 			send_data_byte(data[index]);
-when VERIFY_DATA:
+
+			when VERIFY_DATA:
 			verify_data_sent();
-when STOP:
+			when STOP:
 			stop();
-otherwise:
+			otherwise:
 			state = DONE;
 		}
 	}
@@ -92,24 +95,24 @@ int I2C::read (uint8_t * data, uint8_t size)
 	while (state != DONE)
 	{
 		if (fail_count >= MAX_FAIL_COUNT)
-			return I2C_FAILURE;
+		return I2C_FAILURE;
 		switch (state)
 		{
-		case START:
+			case START:
 			start();
-when VERIFY_START:
+			when VERIFY_START:
 			verify_start();
-when SEND_ADDRESS:
+			when SEND_ADDRESS:
 			send_address(READ);
-when VERIFY_ADDRESS:
+			when VERIFY_ADDRESS:
 			verify_read_address_sent();
-when READ_BYTE:
+			when READ_BYTE:
 			read_data_byte();
-when VERIFY_DATA:
+			when VERIFY_DATA:
 			verify_data_read();
-when STOP:
+			when STOP:
 			stop();
-otherwise:
+			otherwise:
 			state = DONE;
 		}
 	}
@@ -137,20 +140,20 @@ void I2C::start ()
 void I2C::verify_start ()
 {
 	if (!interrupt_flag_set())
-		return;
+	return;
 	if (check_status(TW_START))
-		state = SEND_ADDRESS;
+	state = SEND_ADDRESS;
 	else
-		fail();
+	fail();
 }
 
 void I2C::send_address (I2C::Direction direction)
 {
 	//printf("I2Cwriteaddress: %d\n",address);
 	if (direction == READ)
-		address |= 0x01;
+	address |= 0x01;
 	else
-		address &= 0xFE;
+	address &= 0xFE;
 	TWDR = address;
 	TWCR = (1 << TWINT) | (1 << TWEN);
 	state = VERIFY_ADDRESS;
@@ -161,9 +164,9 @@ void I2C::verify_write_address_sent ()
 	if (interrupt_flag_set())
 	{
 		if (check_status(TW_MT_SLA_ACK))
-			state = SEND_BYTE;
+		state = SEND_BYTE;
 		else
-			fail();
+		fail();
 	}
 }
 
@@ -172,9 +175,9 @@ void I2C::verify_read_address_sent ()
 	if (interrupt_flag_set())
 	{
 		if (check_status(TW_MR_SLA_ACK))
-			state = READ_BYTE;
+		state = READ_BYTE;
 		else
-			fail();
+		fail();
 	}
 }
 
@@ -188,7 +191,7 @@ void I2C::send_data_byte (uint8_t data)
 void I2C::read_data_byte ()
 {
 	if (index == size - 1)
-		TWCR ^= (1 << TWEA); // send NACK after reading last byte
+	TWCR ^= (1 << TWEA); // send NACK after reading last byte
 	TWCR = (1 << TWINT) | (1 << TWEN);
 	state = VERIFY_DATA;
 }
@@ -196,22 +199,22 @@ void I2C::read_data_byte ()
 void I2C::verify_data_sent ()
 {
 	if (!interrupt_flag_set())
-		return;
+	return;
 	if (check_status(TW_MT_DATA_ACK))
 	{
 		if (++index < size)
-			state = SEND_BYTE;
+		state = SEND_BYTE;
 		else
-			state = STOP;
+		state = STOP;
 	}
 	else
-		fail();
+	fail();
 }
 
 void I2C::verify_data_read ()
 {
 	if (!interrupt_flag_set())
-		return;
+	return;
 	bool last_byte = !(TWCR & (1 << TWEA));
 	uint8_t status = last_byte ? TW_MR_DATA_NACK : TW_MR_DATA_ACK;
 	State next_state = last_byte ? STOP : READ_BYTE;
@@ -221,7 +224,7 @@ void I2C::verify_data_read ()
 		state = next_state;
 	}
 	else
-		fail();
+	fail();
 }
 
 void I2C::stop ()

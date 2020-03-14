@@ -2,8 +2,7 @@
 #define ROBOT_ADDRESSES_HPP
 
 #define MESSAGE_SENDER        0
-#define LEFT_MOTOR_SPEED      1
-#define RIGHT_MOTOR_SPEED     2
+#define DRIVE_MOTOR_SPEED     1
 #define ARM_MOTOR_SPEED       3
 #define BUCKET_ACTUATOR_SPEED 4
 #define PLOW_SPEED_DIRECTION  5

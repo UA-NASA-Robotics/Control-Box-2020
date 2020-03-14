@@ -5,7 +5,10 @@
  *
  */
 #include "SevenSegment.hpp"
-
+#include "../uart/uart_0.hpp"
+#include "../uart/uart_1.hpp"
+#include "../uart/uart_2.hpp"
+#include "../uart/uart_3.hpp"
 #ifndef _BV
 #define _BV(bit) (1<<(bit))
 #endif
@@ -63,9 +66,13 @@ void Adafruit_LEDBackpack::writeDisplay(void) {
 	for (uint8_t i=0; i<8; i++) {
 		message_data[i*2+1] = displaybuffer[i] & 0xFF;
 		message_data[i*2+2] = displaybuffer[i] >> 8;
+//    printf("data%d: %d\n",i*2+1,message_data[i*2+1]);
+//    printf("data%d: %d\n",i*2+2,message_data[i*2+2]);
 	}
 
+
 	i2c_node.write(message_data,17);
+
 }
 
 void Adafruit_LEDBackpack::clear(void) {
@@ -179,6 +186,7 @@ unsigned int Adafruit_7segment::write(uint8_t c) {
 void Adafruit_7segment::writeDigitRaw(uint8_t d, uint8_t bitmask) {
 	if (d > 4) return;
 	displaybuffer[d] = bitmask;
+	printf("write%d: %d\n",d,displaybuffer[d]);
 }
 
 void Adafruit_7segment::drawColon(bool state) {
@@ -201,6 +209,7 @@ void Adafruit_7segment::writeDigitNum(uint8_t d, uint8_t num, bool dot) {
 	if (d > 4) return;
 
 	writeDigitRaw(d, numbertable[num] | (dot << 7));
+	//printf("write%d: %d\n",d,numbertable[num] | (dot << 7));
 }
 
 void Adafruit_7segment::print(long n, int base)
@@ -250,7 +259,7 @@ void Adafruit_7segment::printFloat(double n, uint8_t fracDigits, uint8_t base)
 	if (toIntFactor < 1) {
 		printError();
 	} else {
-// otherwise, display the number
+		// otherwise, display the number
 		int8_t displayPos = 4;
 
 		if (displayNumber)  //if displayNumber is not 0
@@ -266,10 +275,10 @@ void Adafruit_7segment::printFloat(double n, uint8_t fracDigits, uint8_t base)
 			writeDigitNum(displayPos--, 0, false);
 		}
 
-// display negative sign if negative
+		// display negative sign if negative
 		if(isNegative) writeDigitRaw(displayPos--, 0x40);
 
-// clear remaining display positions
+		// clear remaining display positions
 		while(displayPos >= 0) writeDigitRaw(displayPos--, 0x00);
 	}
 }

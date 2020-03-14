@@ -4,15 +4,17 @@
 /*--------------------------------- Page One ---------------------------------*/
 
 // Variables for Communications
-#define ROUTER_ADDRESS    0x00
-#define MACRO_TYPE      0x01
-#define MACRO_DATA      0x02
-#define REQUEST       0x03
-#define CONNECTED     0x04
-#define TIMEOUT_IN_PROGRESS 0x07
-#define TRANSMIT_MACRO    0x08
-#define MACRO_IN_PROGRESS 0x09
-#define CONNECTED_TIME_ELAP 0x0A
+#define ROUTER_ADDRESS      0x00
+#define CONNECTED_TIME_ELAP     0x01
+#define MACRO_DATA        0x02
+#define REQUEST         0x03
+#define CONNECTED       0x04
+#define TIMEOUT_IN_PROGRESS   0x07
+#define MACRO_TYPE        0x08
+#define MACRO_IN_PROGRESS   0x09
+#define X_coord         0x0A
+#define Y_coord         0x0B
+#define HeadingVal        0x0C
 
 /*--------------------------------- Page Two ---------------------------------*/
 
@@ -38,6 +40,7 @@
 #define ARCADE_BUTTON_6_FLAG 0x36 // Arm Down
 #define ARCADE_BUTTON_7_FLAG 0x37 // Plow Up
 #define ARCADE_BUTTON_8_FLAG 0x38 // Plow Down
+#define ARCADE_E_STOP_FLAG   0x39
 
 /*-------------------------------- Page Four ---------------------------------*/
 
@@ -67,5 +70,31 @@ const uint8_t PAGE_FOUR = 0x40;
 /*-------------------------------- Page Four ---------------------------------*/
 
 #define FORCE_SENSOR_FEEDBACK 0x50
+#define ROBOT_X_LOCATION  0x55
+#define ROBOT_Y_LOCATION  0x56
+#define ROBOT_HEADING   0x57
+
+
+#define MAIN_MOTOR_CELL_1 0x60
+#define MAIN_MOTOR_CELL_2 0x61
+#define MAIN_MOTOR_CELL_3 0x63
+#define MAIN_MOTOR_CELL_4 0x64
+#define MAIN_MOTOR_CELL_5 0x65
+#define MAIN_MOTOR_CELL_6 0x66
+#define MAIN_MOTOR_CELL_7 0x67
+#define MAIN_MOTOR_CELL_8 0x68
+#define MAIN_EE_CELL_1    0x69
+#define MAIN_EE_CELL_2    0x6A
+
+#define SECOND_MOTOR_CELL_1 0x6B
+#define SECOND_MOTOR_CELL_2 0x6C
+#define SECOND_MOTOR_CELL_3 0x6D
+#define SECOND_MOTOR_CELL_4 0x6E
+#define SECOND_MOTOR_CELL_5 0x6F
+#define SECOND_MOTOR_CELL_6 0x70
+#define SECOND_MOTOR_CELL_7 0x71
+#define SECOND_MOTOR_CELL_8 0x72
+#define SECOND_EE_CELL_1  0x73
+#define SECOND_EE_CELL_2  0x74
 
 #endif // MEMORY_VARIABLES_HPP

@@ -3,34 +3,47 @@
 
 #define NO_OBJECT 0
 
-#define Form0            0x0A00
-#define Image0           0x0C00
-#define Winbutton0       0x0600
-#define Winbutton1       0x0601
-#define Form1            0x0A01
-#define LEDDigits    0x0F00
-#define Image1           0x0C01
-#define Winbutton4       0x0604
-#define Statictext0      0x1500
-#define Led0             0x0E00
-#define Led2             0x0E02
-#define Led3             0x0E03
-#define Form2            0x0A02
-#define Image2           0x0C02
-#define Statictext1      0x1501
-#define Winbutton5       0x0605
-#define Gauge0           0x0B00
-#define Statictext2      0x1502
-#define Statictext3      0x1503
-#define Statictext4      0x1504
-#define Statictext5      0x1505
-#define Statictext6      0x1506
-#define Statictext7      0x1507
-#define Gauge1           0x0B01
-#define Gauge2           0x0B02
-#define Gauge3           0x0B03
-#define Gauge4           0x0B04
-#define Gauge5           0x0B05
+#define Form             0x0A
+#define Image            0x0C
+#define Winbutton        0x06
+#define LEDDigits        0x0F
+#define Statictext       0x15
+#define Led              0x0E
+#define Gauge            0x0B
+
+enum BattryCells {
+	Main_Motor_Cell_1= 1,
+	Main_Motor_Cell_2,
+	Main_Motor_Cell_3,
+	Main_Motor_Cell_4,
+	Main_Motor_Cell_8,
+	Main_Motor_Cell_7,
+	Main_Motor_Cell_6,
+	Main_Motor_Cell_5,
+	Main_EE_Cell_1,
+	Main_EE_Cell_2,
+	Second_Motor_Cell_1,
+	Second_Motor_Cell_2,
+	Second_Motor_Cell_3,
+	Second_Motor_Cell_4,
+	Second_Motor_Cell_5,
+	Second_Motor_Cell_6,
+	Second_Motor_Cell_7,
+	Second_Motor_Cell_8,
+	Second_EE_Cell_1,
+	Second_EE_Cell_2,
+	Main_E_bat,
+	Dig_E_bat,
+	Main_Motor_Bat,
+	Dig_Motor_Bat,
+	X_LOC,
+	Y_LOC,
+	HEADING
+
+
+};
+#define CONNECTED_LED 0
+#define MACRO_RUNNING 1
 
 
 

@@ -26,13 +26,13 @@ public:
 	// Talking to the Robot
 	void transmit ();
 	bool is_emergency_stop_pressed ();
-	int is_macro_in_progress ();
+	uint16_t is_macro_in_progress ();
 	bool is_macro_requested ();
 	void handle_emergency_stop();
 	void send_stop_macro ();
 	void ping_robot();
-	int8_t get_requested_macro ();
-	void handle_macro_request (uint8_t);
+	int16_t get_requested_macro ();
+	void handle_macro_request (uint16_t);
 	void handle_manual_command ();
 	void stop_all_motors ();
 	void send (const Message [], uint8_t);
